@@ -1,0 +1,69 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red87\green87\blue87;}
+\margl1440\margr1440\vieww17600\viewh8420\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\b\fs24 \cf0 Introduction
+\b0 \
+\
+This is a repository for the Lidar Turbulence Error Reduction Algorithm (L-TERRA), a Python toolbox that reads in lidar data and applies a series of turbulence intensity (TI) corrections. More information on the corrections used in L-TERRA can be found in the following reference: \
+\pard\pardeftab720
+\cf0 \expnd0\expndtw0\kerning0
+Newman, J. F. and A. Clifton, 2017: An error reduction algorithm to improve lidar turbulence estimates for wind energy. 
+\i Wind Energ. Sci.,
+\i0  
+\b 2
+\b0 , 77-95.\
+\
+
+\b Requirements\
+\
+
+\b0 1. Python distribution (2.7.xx or higher) with numpy\
+2. scipy\
+3. sklearn (not absolutely necessary, but nice for calculating metrics)\
+\
+
+\b Running Code 
+\b0 \
+\
+\kerning1\expnd0\expndtw0 L-TERRA is comprised of two main scripts:\
+\
+test_L_TERRA_corrections_XX.py: Reads in lidar and reference data, loops through all combinations of corrections, and writes out TI mean absolute error (MAE) for each combination to a CSV file\
+apply_L_TERRA_corrections_XX.py: Reads in lidar data, applies user-selected set of corrections, and writes out corrected lidar TI values to a CSV file \
+\
+The testing script should be used to determine optimal model combinations for a given dataset, while the application script should be used to apply the optimal model combination to a new dataset. Versions of these scripts are given for use with both WINDCUBE v2  (WC) and ZephIR 300 (ZephIR) data. \
+\
+To use test_L_TERRA_corrections_XX.py, place reference data and lidar data in two separate folders (reference_directory and lidar_directory, respectively) and specify the directory where the CSV output file should be saved (main_directory).  You must also specify the height where you\'92re making the TI comparison, the date range you\'92d like to read in, and the wind speed and wind direction thresholds to use (if any) to determine valid data points. \
+\
+To use apply_L_TERRA_corrections_XX.py, specify the lidar directory and directory where the CSV output file should be saved, in addition to the height of interest, date range, and wind speed and wind direction thresholds. You must also specify the corrections to use for different stability conditions. \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+
+\b Data Preparation 
+\b0 \
+\
+L-TERRA requires data to be in numpy format (.npz) with one data file for each 10-minute period of the dataset. Numpy files are much smaller and easier to navigate than CSVs and processing time is reduced significantly by only reading in 10 minutes of data at a time. Scripts are included that read in WINDCUBE .rtd files or high-resolution ZephIR .ZPH files, perform some basic calculations, and write the data out to .npz files. \
+\
+Measurements from the reference instrument (sonic or cup anemometer) should also be written out to .npz files with the following naming convention:\
+\
+Ref_YYYYMMDD_HHMM_UTC.npz\
+\
+where HHMM UTC is the start of the 10-minute averaging period.\
+\
+Reference instrument files should contain the following variables:\
+\
+U: 10-min. mean horizontal wind speed \
+wd: 10-min. mean wind direction\
+u_var: 10-min. streamwise variance\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b \cf0 Code Maintainers\
+\
+
+\b0 This code is maintained by Jennifer Newman (National Renewable Energy Laboratory). \
+\
+\
+}
